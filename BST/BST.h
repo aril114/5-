@@ -1,8 +1,6 @@
 #ifndef BST_BST_H
 #define BST_BST_H
 
-#endif //BST_BST_H
-
 #include "TreeNode.h"
 
 template <typename T>
@@ -146,3 +144,5 @@ template<typename T>
 BST<T>::~BST() {
     delBt(root);
 }
+
+#endif //BST_BST_H

@@ -1,6 +1,5 @@
-﻿#include <stdexcept>
-
-#pragma once
+#ifndef BST_TREENODE_H
+#define BST_TREENODE_H
 
 // узел двоичного дерева
 template <typename T>
@@ -185,15 +184,15 @@ void delBt(TreeNode<T>* node) {
 template <typename T>
 TreeNode<T>* copyBt(TreeNode<T>* oldTreeRoot) {
     TreeNode<T> *newlptr, *newrptr, *newnode;
-    
+
     if (oldTreeRoot == nullptr)
         return nullptr;
-        
+
     newlptr = copyBt(oldTreeRoot->getL());
     newrptr = copyBt(oldTreeRoot->getR());
-    
+
     newnode = new TreeNode<T>(oldTreeRoot->getData(), newlptr, newrptr);
-    
+
     return newnode;
 }
 
@@ -239,13 +238,14 @@ void btCountMain(TreeNode<T>* node, int &size) {
 // удаление узла из бинарного дерева
 template <typename T>
 void btRemove(TreeNode<T>* toRemove, TreeNode<T>* root) {
-	if (toRemove == nullptr) throw std::invalid_argument("toRemove = nullptr");
-     // нет дочерних узлов
+    if (toRemove == nullptr) throw std::invalid_argument("toRemove = nullptr");
+    if (root == nullptr) throw std::invalid_argument("root = nullptr");
+    // нет дочерних узлов
     if (toRemove->getL() == nullptr && toRemove->getR() == nullptr) {
         TreeNode<T>* parent = btSearchParent(toRemove, root);
         if (parent == nullptr)
             delete toRemove;
-		// устанавливаем в nullptr дочерний элемент родителя удаляемого элемента, который прежде ссылался на удаляемый
+            // устанавливаем в nullptr дочерний элемент родителя удаляемого элемента, который прежде ссылался на удаляемый
         else {
             if (parent->getL() == toRemove) {
                 parent->setL(nullptr);
@@ -253,35 +253,38 @@ void btRemove(TreeNode<T>* toRemove, TreeNode<T>* root) {
             else {
                 parent->setR(nullptr);
             }
-			delete toRemove;
+            delete toRemove;
         }
     }
 
-    //один дочерний узел
+        //один дочерний узел
     else if (toRemove->getL() == nullptr || toRemove->getR() == nullptr) {
         TreeNode<T>* childNode;
-		// childNode - тот узел, который не является nullptr
-		if (toRemove->getL() == nullptr) 
-			childNode = toRemove->getR();
-		else 
-			childNode = toRemove->getL();
+        // childNode - тот узел, который не является nullptr
+        if (toRemove->getL() == nullptr)
+            childNode = toRemove->getR();
+        else
+            childNode = toRemove->getL();
 
         TreeNode<T>* parent = btSearchParent(toRemove, root);
-		delete toRemove;
-		if (parent == nullptr) return;
+        if (parent == nullptr) {
+            delete toRemove;
+            return;
+        }
 
-		// у родителя дочерний узел устанавливается в дочерний узел удаляемого узла
+        // у родителя дочерний узел устанавливается в дочерний узел удаляемого узла
         if (parent->getL() == toRemove) {
             parent->setL(childNode);
         }
         else {
             parent->setR(childNode);
         }
+        delete toRemove;
     }
-    
-    //два дочерних узла
+
+        //два дочерних узла
     else {
-		// тот узел, который хотели удалить, меняем местами с его бОльшим узлом и удаляем бОльший узел
+        // тот узел, который хотели удалить, меняем местами с его бОльшим узлом и удаляем бОльший узел
         TreeNode<T>* successor = succ(toRemove, root);
         toRemove->setData(successor->getData());
         btRemove(successor, root);
@@ -329,7 +332,7 @@ TreeNode<T>* succ(TreeNode<T>* node, TreeNode<T>* root) {
                 nd = lCh;
                 ndData = nd->getData();
             }
-            // node справа. Переходим вправо
+                // node справа. Переходим вправо
             else {
                 nd = rCh;
                 ndData = nd->getData();
@@ -340,70 +343,6 @@ TreeNode<T>* succ(TreeNode<T>* node, TreeNode<T>* root) {
         result = result->getL();
     return result;
 }
- 
 
-/*template <typename T>
-void removeNode(TreeNode<T>* node, TreeNode<T>* root)
-{
-    TreeNode<T> * pointer = root;
-    TreeNode<T> * parent  = NULL;
-    
-    T value = node->getData();
- 
-    while (pointer != NULL && pointer->getData() != value)
-    {
-        parent = pointer;
-        if (value < pointer->getData())
-            pointer = pointer->getL();
-        else
-            pointer = pointer->getR();
-    }
-    
-    if (pointer != NULL)
-    {
-        TreeNode<T> * removed = NULL;
- 
-        if (pointer->getL() == NULL || pointer->getR() == NULL)
-        {   
-            TreeNode<T> * child = NULL;
-            removed = pointer;
- 
-            if (pointer->getL() != NULL)
-                child = pointer->getL();
-            else if (pointer->getR() != NULL)
-                child = pointer->getR();
- 
-            if (parent == NULL)
-                root = child;
-            else
-            {
-                if (parent->getL() == pointer)
-                    parent->setL(child);
-                else
-                    parent->setR(child);
-            }
-        }
-        else // (pointer->getL() != NULL && pointer->getR() != NULL)
-        {
-            TreeNode<T> * mostLeft = pointer->getR();
-            TreeNode<T> * mostLeftParent = pointer;
-            
-            while (mostLeft->getL() != NULL)
-            {
-                mostLeftParent = mostLeft;
-                mostLeft = mostLeft->getL();
-            }
- 
-            pointer->setData(mostLeft->getData());
-            removed = mostLeft;
- 
-            if (mostLeftParent->getL() == mostLeft)
-                mostLeftParent->setL(NULL);
-            else
-                mostLeftParent->setR(NULL);
-        }
- 
-		std::cout << removed->getData() << " deleted" << std::endl;
-        delete removed;
-    }
-}*/
+
+#endif //BST_TREENODE_H
