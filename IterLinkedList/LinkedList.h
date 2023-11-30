@@ -2,12 +2,14 @@
 #define ITERLINKEDLIST_LINKEDLIST_H
 
 #include <cstddef>
-#include "node.h"
+#include "Node.h"
+#include "LLIter.h"
 
-template <class T>
+template <typename T>
 class LinkedList
 {
 private:
+
     // указатели для доступа к началу и концу списка
     Node<T> *front, *rear;
 
@@ -19,13 +21,21 @@ private:
 
     // положение в списке. используется методом reset
     int position;
-    // закрытые методы создания и удаления узлов
-    // void freeNode(Node<T> *p);
 
     // копирует список L в текущий список
     void copyList(const LinkedList<T>& L);
 
 public:
+    //
+    LLIter<T> begin() const {
+        LLIter<T> iter(front);
+        return iter;
+    }
+    LLIter<T> end() const {
+        LLIter<T> iter(rear->nextNode());
+        return iter;
+    }
+
     // конструктор
     LinkedList(void);
     // LinkedList(const LinkedList<T>& L);
@@ -33,14 +43,13 @@ public:
     // деструктор
     ~LinkedList(void);
 
-    // оператор присваивания
-    // LinkedList<T>& operator= (const LinkedList<T>& L);
-
     // проверка состояния списка
+
     int listSize(void) const;
     int listEmpty(void) const;
 
     // методы прохождения списка
+
     void reset(int pos = 0);
     void next(void);
     int endOfList(void) const;
@@ -51,6 +60,7 @@ public:
     void insertAt(const T& item);
 
     // методы удаления
+
     void deleteFront(void);
     void deleteAt(void);
 
@@ -59,6 +69,8 @@ public:
 
     // очистка списка
     void clearList(void);
+
+    // LLIter begin end
 
     // возвращает position
     int currentPosition(void) const;
@@ -71,6 +83,8 @@ public:
 #include <iostream>
 
 using namespace std;
+
+
 
 // возвращает список в текстовом виде, разделяя элементы списка пробелами
 template <class T>
@@ -118,7 +132,7 @@ void LinkedList<T>::insertRear(const T& item)
         insertFront(item);
     else
     {
-        newNode = new Node(item);
+        newNode = new Node<T>(item);
         rear->insertAfter(newNode);
         rear = newNode;
     }
@@ -132,7 +146,7 @@ void LinkedList<T>::insertFront(const T& item)
     // создание нового узла, чтобы он указывал
     // на первоначальную голову списка
     // изменение головы списка
-    Node<T> *newFront = new Node(item, front);
+    Node<T> *newFront = new Node<T>(item, front);
     front = newFront;
     if (position > -1) {
         position++;
@@ -287,13 +301,13 @@ void LinkedList<T>::insertAt(const T& item)
     {
         // вставка в начало списка. помещает также
         // узел в пустой список
-        newNode = new Node(item, front);
+        newNode = new Node<T>(item, front);
         front = newNode;
     }
     else
     {
         // вставка внутрь списка. помещает узел после prevPtr
-        newNode = new Node(item);
+        newNode = new Node<T>(item);
         prevPtr->insertAfter(newNode);
     }
 

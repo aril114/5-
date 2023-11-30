@@ -109,6 +109,8 @@ bool insertTest() {
     result = expectedParent->getL() == bst->find(4);
     delete bst;
     return result;
+
+    // добавить проверку для вырожденного дерева
 }
 
 void testing() {

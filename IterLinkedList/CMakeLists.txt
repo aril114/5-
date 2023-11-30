@@ -3,4 +3,4 @@ project(IterLinkedList)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(IterLinkedList main.cpp Iterator.h Node.h LinkedList.h LLIter.h)
+add_executable(IterLinkedList main.cpp Iterator.h Node.h LinkedList.h LLIter.h testing.h)

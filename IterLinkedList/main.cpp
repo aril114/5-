@@ -1,6 +1,14 @@
 #include <iostream>
+#include "LinkedList.h"
+#include "testing.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    testing();
+
+    LinkedList<int> ll;
+    for (int i=1; i<=10; i++)
+        ll.insertRear(i);
+
+    for (int number : ll)
+        std::cout << number << "\n";
 }

@@ -3,7 +3,7 @@
 
 #include <cstddef>
 
-template <class T>
+template <typename T>
 class Node
 {
 private:
@@ -19,44 +19,44 @@ public:
 
     // методы модификации списка
     void insertAfter(Node<T> *p);
-    Node<T> *deleteAfter(void);
+    Node<T> *deleteAfter();
 
     // получение адреса следующего узла
-    Node<T> *nextNode(void) const;
+    Node<T> *nextNode() const;
 };
 
 using namespace std;
 
 // конструктор. инициализация данных и указателя
-template <class T>
-Node<T>::Node(const T& item, Node<T>* ptrnext = nullptr) :
+template <typename T>
+Node<T>::Node(const T& item, Node<T>* ptrnext) :
         data(item), next(ptrnext)
 {}
 
 // возвратить закрытый член next
-template <class T>
-Node<T> *Node<T>::nextNode(void) const
+template <typename T>
+Node<T> *Node<T>::nextNode() const
 {
     return next;
 }
 
 // вставить узел p после текущего узла
-template <class T>
+template <typename T>
 void Node<T>::insertAfter(Node<T> *p)
 {
     next = p;
 }
 
 // удалить узел, следующий за текущим, и возвратить его адрес
-template <class T>
-Node<T> *Node<T>::deleteAfter(void)
+template <typename T>
+Node<T> *Node<T>::deleteAfter()
 {
     // сохранить адрес удаляемого узла
     Node<T> *tempPtr = next;
 
-    // если нет следующего узла, возвратить NULL
-    if (next == NULL)
-        return NULL;
+    // если нет следующего узла, возвратить nullptr
+    if (next == nullptr)
+        return nullptr;
 
     // текущий узел указывает на узел, следующий за tempPtr
     next = tempPtr->next;

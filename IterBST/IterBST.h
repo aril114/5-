@@ -1,17 +1,20 @@
+#ifndef ITERBST_ITERBST_H
+#define ITERBST_ITERBST_H
+
 #ifndef ITERLINKEDLIST_LLITER_H
 #define ITERLINKEDLIST_LLITER_H
 
-#include "Node.h"
-#include "LinkedList.h"
+#include "TreeNode.h"
 #include "Iterator.h"
 
 // итератор для связанного списка
 template <typename T>
-class LLIter : public Iterator<T> {
+class IterBST : public Iterator<T> {
 private:
-    Node<T>* node;
+    TreeNode<T>* node;
+    TreeNode<T>* root;
 public:
-    LLIter(Node<T>* node);
+    IterBST(TreeNode<T>* node, TreeNode<T> *root);
     Iterator<T>& operator++() override;
     T& operator*() override;
     bool operator==(const Iterator<T>&) const override;
@@ -21,31 +24,35 @@ public:
 
 
 template <typename T>
-LLIter<T>::LLIter(Node<T> *node) {
+IterBST<T>::IterBST(TreeNode<T> *node, TreeNode<T> *root) {
     this->node = node;
+    this->root = root;
 }
 
 template <typename T>
-T& LLIter<T>::operator*() {
+T& IterBST<T>::operator*() {
     if (this->node == nullptr) throw std::runtime_error("Tried to get value of nullptr node");
     return this->node->data;
 }
 
 template <typename T>
-bool LLIter<T>::operator==(const Iterator<T>& iter) const {
+bool IterBST<T>::operator==(const Iterator<T>& iter) const {
     // dynamic_cast бросает исключение если преобразование не удается
-    return this->node == dynamic_cast<const LLIter<T>&>(iter).node;
+    return this->node == dynamic_cast<const IterBST<T>&>(iter).node;
 }
 
 template <typename T>
-bool LLIter<T>::operator!=(const Iterator<T>& iter) const {
-    return this->node != dynamic_cast<const LLIter<T>&>(iter).node;
+bool IterBST<T>::operator!=(const Iterator<T>& iter) const {
+    return this->node != dynamic_cast<const IterBST<T>&>(iter).node;
 }
 
 template <typename T>
-Iterator<T>& LLIter<T>::operator++() {
-    this->node = this->node->nextNode();
+Iterator<T>& IterBST<T>::operator++() {
+    this->node = this->node->nextNode(root);
     return *this;
 }
 
 #endif //ITERLINKEDLIST_LLITER_H
+
+
+#endif //ITERBST_ITERBST_H
