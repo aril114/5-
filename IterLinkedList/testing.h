@@ -1,3 +1,5 @@
+// автор: Артамонов Илья
+
 #ifndef ITERLINKEDLIST_TESTING_H
 #define ITERLINKEDLIST_TESTING_H
 
@@ -46,11 +48,22 @@ void asteriskTest() {
     }
 }
 
+// дойти до последнего элемента и сравнить его с LinkedList.end()
+void endTest() {
+    LinkedList<int> ll = createLL();
+    LLIter<int> endIter = ll.end();
+    LLIter<int> iter = ll.begin();
+    for (int i = 0; i<10; i++)
+        ++iter;
+    if (endIter != iter) throw std::runtime_error("iter != endIter");
+}
+
 // вызов всех функций тестирования
 void testing() {
     ppTest();
     eqNotEqTest();
     asteriskTest();
+    endTest();
 }
 
 #endif //ITERLINKEDLIST_TESTING_H

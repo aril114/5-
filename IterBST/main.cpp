@@ -1,13 +1,11 @@
 #include <iostream>
 #include "testing.h"
-#include "BST.h"
 
 int main() {
+    testing();
+
     BST<int> bst = createBST();
 
-    for (int el: bst)
+    for (int el: bst) // создаются неявные итераторы
         std::cout << el << "\n";
-
-    std::cout << "end: " << *bst.end() << "\n";
-    std::cout << "begin: " << *bst.begin() << "\n";
 }

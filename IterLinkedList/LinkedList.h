@@ -1,3 +1,5 @@
+// автор: Артамонов Илья
+
 #ifndef ITERLINKEDLIST_LINKEDLIST_H
 #define ITERLINKEDLIST_LINKEDLIST_H
 
@@ -5,6 +7,8 @@
 #include "Node.h"
 #include "LLIter.h"
 
+
+// односвязный список
 template <typename T>
 class LinkedList
 {

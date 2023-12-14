@@ -1,3 +1,5 @@
+// автор: Артамонов Илья
+
 #include <iostream>
 #include "LinkedList.h"
 #include "testing.h"

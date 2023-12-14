@@ -95,7 +95,7 @@ void addToBST(TreeNode<T> *node, T value) {
     }
 }
 
-/*template <typename T>
+template <typename T>
 using funcVoidTN = void(*)(TreeNode<T> *);
 
 // в угловых скобках должно быть T, это T вставляется в строку на 3 строки выше
@@ -106,7 +106,52 @@ void NRL(TreeNode<T>* node, funcVoidTN<T> func) {
     if (r != nullptr) NRL(r, func); // передаем указатель на функцию
     TreeNode<T>* l = node->getL();
     if (l != nullptr) NRL(l, func);
-}*/
+}
+
+template <typename T>
+void RNL(TreeNode<T>* node, funcVoidTN<T> func) {
+    TreeNode<T>* r = node->getR();
+    if (r != nullptr) RNL(r, func);
+    func(node);
+    TreeNode<T>* l = node->getL();
+    if (l != nullptr) RNL(l, func);
+}
+
+template <typename T>
+void RLN(TreeNode<T>* node, funcVoidTN<T> func) {
+    TreeNode<T>* r = node->getR();
+    if (r != nullptr) RLN(r, func);
+    TreeNode<T>* l = node->getL();
+    if (l != nullptr) RLN(l, func);
+    func(node);
+}
+
+template <typename T>
+void LRN(TreeNode<T>* node, funcVoidTN<T> func) {
+    TreeNode<T>* l = node->getL();
+    if (l != nullptr) LRN(l, func);
+    TreeNode<T>* r = node->getR();
+    if (r != nullptr) LRN(r, func);
+    func(node);
+}
+
+template <typename T>
+void LNR(TreeNode<T>* node, funcVoidTN<T> func) {
+    TreeNode<T>* l = node->getL();
+    if (l != nullptr) LNR(l, func);
+    func(node);
+    TreeNode<T>* r = node->getR();
+    if (r != nullptr) LNR(r, func);
+}
+
+template <typename T>
+void NLR(TreeNode<T>* node, funcVoidTN<T> func) {
+    func(node);
+    TreeNode<T>* l = node->getL();
+    if (l != nullptr) NLR(l, func);
+    TreeNode<T>* r = node->getR();
+    if (r != nullptr) NLR(r, func);
+}
 
 // делает массив из дерева
 template <typename T>

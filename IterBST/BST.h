@@ -30,7 +30,9 @@ public:
     }
 
     IterBST<T> end() const {
-        return IterBST<T>(root, root);
+        IterBST<T> iter = IterBST<T>(root, root);
+        ++iter;
+        return iter;
     }
 
     // конструктор по указателю на корень

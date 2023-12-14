@@ -14,6 +14,7 @@ private:
 public:
     // следующий узел по LNR
     TreeNode<T>* nextNode(TreeNode<T>* root) {
+
         TreeNode<T> *node, *r, *l;
         node = btSearchParent(this, root);
         if (node->getL() == this) {

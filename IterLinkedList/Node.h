@@ -1,3 +1,5 @@
+// автор: Артамонов Илья
+
 #ifndef ITERLINKEDLIST_NODE_H
 #define ITERLINKEDLIST_NODE_H
 
